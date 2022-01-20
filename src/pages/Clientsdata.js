@@ -4,6 +4,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { useHistory } from "react-router-dom";
 
+import { makeStyles } from '@mui/styles';
+
 import axios from 'axios'
 
 import {
@@ -12,9 +14,26 @@ import {
 
  import { useEffect, useState, useRef } from 'react';
 
+const useStyles = makeStyles((theme) => ({
+    gridContainer: {
+        width: 950,
+        height: 300,
+        [theme.breakpoints.down('lg')]: {
+            width: 650,
+            height: 300
+        },
+        [theme.breakpoints.down('md')]: {
+            width: 400
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: 450
+        }
+    }
+}))
 
 const Clientsdata = () => {
     let history = useHistory();
+    const classes = useStyles();
    
   const [rowData, setRowData] = useState([]);
   const gridRef = useRef(null);
@@ -51,7 +70,8 @@ const Clientsdata = () => {
 
 
 
-                <div className="ag-theme-alpine" style={{height: 300, width: 950}}>
+                <div className="ag-theme-alpine" >
+                    <div className={classes.gridContainer}>
                     <AgGridReact
                     onRowClicked={handleRowClick}
                         ref={gridRef}
@@ -67,6 +87,7 @@ const Clientsdata = () => {
                         <AgGridColumn field="referrer_link" sortable={true} filter={true}></AgGridColumn>
 
                     </AgGridReact>
+                    </div>
                 </div>
             }
                 

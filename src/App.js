@@ -1,5 +1,6 @@
 import './App.css';
 
+import { createTheme, ThemeProvider } from '@mui/system';
 
 import Header from './components/Header'
 import Client from './components/Client';
@@ -24,7 +25,19 @@ import {
 // import Table  from './components/Table';
 
 function App() {
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
+  });
   return (
+    <ThemeProvider theme={theme}>
     <Router history={history}>
     <div className="App">
       
@@ -45,6 +58,7 @@ function App() {
 
     </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
