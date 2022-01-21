@@ -62,7 +62,8 @@ import {
         alignItems: "center",
         [theme.breakpoints.down('sm')]: {
             background: "none",
-            height: "32rem"
+            height: "32rem",
+            // width: "100%"
         }
     },
     container: {
@@ -84,7 +85,7 @@ const Client = () => {
             <div class="col-2">
             <div class="vertical-nav bg-white" id="sidebar">
                 <ul class="nav flex-column bg-white mb-0">
-                <li class="nav-item sidebar"><Link to="/" class="nav-link text-dark font-italic " style={{color: 'white'}}><i class="bi bi-list-ul"></i> &nbsp; &nbsp; All Clients</Link></li>
+                <li class="nav-item sidebar"><Link to="/" class="nav-link font-italic " style={{color: 'white'}}><i class="bi bi-list-ul"></i> &nbsp; &nbsp; All Clients</Link></li>
                 <li class="nav-item"><Link to="/AddClient" class="nav-link text-dark font-italic"><i class="bi bi-plus-square"></i> &nbsp; &nbsp; New Client</Link></li>
                 </ul>
             </div>

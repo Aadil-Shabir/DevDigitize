@@ -37,9 +37,47 @@ const Clientsdata = () => {
    
   const [rowData, setRowData] = useState([]);
   const gridRef = useRef(null);
+  const [gridOptions, setGridOptions] = useState();
 
   const [loading, setLoading] = useState(false)
+  const columnDefs = [
+    {
+      headerName: "ID",
+      field: "id",
+      checkboxSelection:true,
+      maxWidth: 50
+    },
+    {
+      headerName: "Key",
+      field: "client_token",
+    },
+    {
+      headerName: "Operator - Provider",
+      field: "name",
+    },
+    {
+      headerName: "Link",
+      field: "referrer_link",
+    },
+  ];
+  const defaultColumnDefs = {
+    filter: "agTextColumnFilter",
+    sortable: true,
+    resizable: true,
 
+  };
+
+  const onGridReady = (params) => {
+    params.api.sizeColumnsToFit();
+    setGridOptions(params.api);
+    window.addEventListener('resize', function () {
+        setTimeout(function () {
+          params.api.sizeColumnsToFit();
+        });
+      });
+  
+  
+  };
 
    useEffect(() => {
     try {
@@ -73,11 +111,22 @@ const Clientsdata = () => {
                 <div className="ag-theme-alpine" >
                     <div className={classes.gridContainer}>
                     <AgGridReact
-                    onRowClicked={handleRowClick}
+                        rowHeight={40}
+                        style={{ width: "100%", height: "100%;" }}
+                       onGridReady={onGridReady}
+                       columnDefs={columnDefs}
+                       defaultColDef={defaultColumnDefs}
+                       animateRows={true}
+                        onRowClicked={handleRowClick}
                         ref={gridRef}
                         
                         rowData={rowData}
-                        rowSelection="single">
+                        rowSelection="single"
+                        pagination={true}
+                        paginationPageSize={10}
+                        paginationNumberFormatter={function (params) {
+                          return '[' + params.value.toLocaleString() + ']';
+                        }}>
                             
 
                         <AgGridColumn field="id" sortable={true} filter={true} checkboxSelection={true}></AgGridColumn>
