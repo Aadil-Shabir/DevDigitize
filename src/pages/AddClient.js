@@ -4,6 +4,8 @@ import {makeStyles} from "@mui/styles";
 import React, {useState} from 'react';
 import axios from 'axios';
 
+import ClientForm from "./ClientForm";
+
 const useStyles = makeStyles((theme) => ({
     createClientHeaderContainer: {
         background:"white",
@@ -116,6 +118,24 @@ const AddClient = () => {
         service_code:'',
         client_id:'26'
     });
+
+    const [sdata, setdata] = useState({
+        operator_id: '',
+        provider_id: '',
+        weblink: '',
+        subscriptionkey: '',
+        short_code: '',
+        gracedays: '',
+        pinflow: '',
+        billingSC: '',
+        provider_redirect_url: '',
+        package_id: '',
+        service_code_campaign: '',
+        service_code:'',
+        client_id:'26'
+        
+        
+    })
     
     const handleChange = (e) => {
         setReq({ ...req, [e.target.name]: e.target.value })
@@ -185,150 +205,7 @@ const AddClient = () => {
                 <div  className={classes.formContainer}>
                     <div className={classes.formHolder}> 
 
-                    <form onSubmit={handleSubmit}>
-        
-
-    <div className={classes.formContentHolder}>
-        
-        <div className="col-9" style={{width: "50vw"}}>
-            <p className={classes.formParagraph}> Client info</p>
-
-            <div className="form-row">
-            <div className={classes.formContentSqeezer}>
-            <div className="form-group col-md-5">
-                <label htmlFor="inputEmail4">Subscription key </label>
-                <input type="text" className="form-control" name="subscriptionkey" onChange={handleChange}  placeholder=""  />
-            </div>
-            <div className="form-group col-md-1">
-            </div>
-                        
-            <div className="form-group col-md-5">
-            <label htmlFor="inputPassword4" className={classes.parser}>Status</label>
-            <br></br>
-                
-            <label class="switch">
-            <input type="checkbox"/>
-            <span class="slider round"></span>
-            </label>
-
-            </div>
-            </div>
-            </div>
-            
-            <br></br>
-            <div className="form-row">
-            <div className={classes.formContentSqeezer}>
-            <div className="form-group col-md-5">
-                <label htmlFor="inputEmail4">Operator</label>
-                <input type="text" className="form-control" name="operator_id" onChange={handleChange}  placeholder="" />
-            </div>
-            <div className="form-group col-md-1">
-            </div>
-                        
-            <div className="form-group col-md-5">
-                <label htmlFor="inputPassword4" className={classes.parser}>Provider</label>
-                <input type="text" className="form-control" name="provider_id"  onChange={handleChange}  placeholder=""  />
-            </div>
-            </div>
-            </div>
-
-
-            <br></br>
-            <br></br>
-            <p className={classes.formParagraph}> Configuration</p>
-
-            <div className="form-row" style ={{display:"flex",flexDirection:"row"}}>
-            <div className="form-group col-md-11" style={{width: "50vw"}}>
-                <label htmlFor="inputEmail4">Subscription key </label>
-                <input type="text" className="form-control" name="subscriptionkey"  onChange={handleChange} placeholder=""  />
-            </div>
-            
-            </div>
-            
-            <br></br>
-            <div className="form-row" style ={{display:"flex",flexDirection:"row"}}>
-                <div className={classes.formContentSqeezer} style={{width: "50vw"}}>
-            <div className="form-group col-md-3">
-                <label htmlFor="inputEmail4">Short code</label>
-                <input type="text" className="form-control" name="short_code" onChange={handleChange}  placeholder="" />
-            </div>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <div className="form-group col-md-3">
-                <label htmlFor="inputPassword4">Billing Short codeder</label>
-                <input type="text" className="form-control" name="billingSC" onChange={handleChange} placeholder=""  />
-            </div>
-
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            <div className="form-group col-md-3">
-                <label htmlFor="inputPassword4">Grace days</label>
-                <input type="text" className="form-control" name="gracedays" onChange={handleChange} placeholder=""  />
-            </div>
-            </div>
-            </div>
-            
-            <br></br>
-
-            
-            <div className="form-row" style ={{display:"flex",flexDirection:"row"}}>
-                <div className={classes.formContentSqeezer} style={{width: "50vw"}}>
-            <div className="form-group col-md-3">
-                <label htmlFor="inputEmail4">Service Code</label>
-                <input type="text" className="form-control" name="service_code" onChange={handleChange} placeholder="" />
-            </div>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <div className="form-group col-md-3">
-                <label htmlFor="inputPassword4">Service Campaign</label>
-                <input type="text" className="form-control" name="service_code_campaign" onChange={handleChange} placeholder="" />
-            </div>
-
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-            <div className="form-group col-md-3">
-                <label htmlFor="inputPassword4">Pin Flow</label>
-                <input type="text" className="form-control" name="pinflow" onChange={handleChange} placeholder=""  />
-            </div>
-            </div>
-            </div>
-            
-            
-        </div>
-
-
-        
-
-        <div className="col-3" style={{marginLeft:"0rem"}}>
-                <p className={classes.formParagraph}> Package</p>
-                <div className={classes.widthIncreaser}>
-                <div className="form-row">
-            <div className="form-group col-md-12">
-                <label htmlFor="inputEmail4">Type</label>
-                <input type="text" className="form-control" id="inputEmail4" placeholder="" />
-            </div>
-            &nbsp; &nbsp;&nbsp; &nbsp;
-            <div className="form-group col-md-12">
-                <label htmlFor="inputPassword4">Price</label>
-                <input type="text" className="form-control" id="inputPassword4" placeholder="" />
-            </div>
-            &nbsp; &nbsp;&nbsp; &nbsp;
-            <div className="form-group col-md-12">
-                <label htmlFor="inputPassword4">Recurrence Days</label>
-                <input type="text" className="form-control" id="inputPassword4" placeholder="" />
-            </div>
-            </div>
-        </div>
-
-
-    </div>
-
-
-    </div>
-        
-       
-      </form>
-
+                    <ClientForm sdata={sdata} />
 
                                        
                     </div>
