@@ -16,10 +16,10 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {
-        width: 950,
-        height: 300,
+        width: 1222,
+        height: 400,
         [theme.breakpoints.down('lg')]: {
-            width: 650,
+            width: 750,
             height: 300
         },
         [theme.breakpoints.down('md')]: {

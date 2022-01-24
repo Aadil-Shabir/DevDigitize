@@ -84,7 +84,7 @@ const ClientForm  = (props) => {
                 <div className={classes.formContentSqeezer}>
             <div className="form-group col-md-5">
                 <label htmlFor="inputEmail4">Operator</label>
-                <input type="text" className="form-control" id="inputEmail4" placeholder="" defaultValue= {props.sdata.operator}/>
+                <input type="text" className="form-control" id="inputEmail4" placeholder="" defaultValue= {props.operator}/>
             </div>
             <div className="form-group col-md-1">
             </div>
@@ -169,17 +169,17 @@ const ClientForm  = (props) => {
                 <div className="form-row" >
             <div className="form-group col-md-12">
                 <label htmlFor="inputEmail4">Type</label>
-                <input type="text" className="form-control" id="inputEmail4" placeholder="" />
+                <input type="text" className="form-control" id="inputEmail4" placeholder="" defaultValue={props.packageData.name ? props.packageData.name : "" } />
             </div>
             &nbsp; &nbsp;&nbsp; &nbsp;
             <div className="form-group col-md-12">
                 <label htmlFor="inputPassword4">Price</label>
-                <input type="text" className="form-control" id="inputPassword4" placeholder="" />
+                <input type="text" className="form-control" id="inputPassword4" placeholder="" defaultValue={props.packageData.price}  />
             </div>
             &nbsp; &nbsp;&nbsp; &nbsp;
             <div className="form-group col-md-12">
                 <label htmlFor="inputPassword4">Recurrence Days</label>
-                <input type="text" className="form-control" id="inputPassword4" placeholder="" />
+                <input type="text" className="form-control" id="inputPassword4" placeholder="" defaultValue={props.packageData.recurrence_days} />
             </div>
             </div>
         </div>

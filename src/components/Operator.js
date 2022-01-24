@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import {AgGridColumn, AgGridReact} from 'ag-grid-react';
 import axios from 'axios'
+
+import {makeStyles} from "@mui/styles";
 
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -12,14 +14,142 @@ import {
     Link
   } from "react-router-dom";
 
+  const useStyles = makeStyles((theme) => ({
+    containerBox: {
+        background: "white",
+        height: "7rem",
+        width: "82vw",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        [theme.breakpoints.down('sm')]: {
+            width: "60vw",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "8rem"
+        }
+    },
+    containerText: {
+        fontSize: "25px",
+        fontWeight: "bold",
+        marginTop: "2rem",
+      marginLeft: "2%",
+      textAlign: "center",
+      [theme.breakpoints.down('sm')]: {
+          margin: "0",
+          padding: "0"
+      }
+    },
+    newContainerBtn: {
+        fontSize: "25px",
+        marginTop: "2rem",
+        fontWeight: "bold",
+        float: "right",
+        width: "12rem",
+        marginLeft: "2%",
+        [theme.breakpoints.down('sm')]: {
+            width: "12rem",
+            marginLeft: "2rem",
+            padding: "0",
+            margin: "0",
+            alignItems: "center"
+        }
+    },
+    gridBox: {
+        background:"white",
+        marginTop:"2%",
+        marginLeft:"3%", 
+        height:"25rem",
+        width:"79.5vw",
+        display:"flex",
+        flexDirection:"row",
+        justifyContent: "center",
+        alignItems: "center",
+        [theme.breakpoints.down('sm')]: {
+            background: "none",
+            height: "32rem",
+            // width: "100%"
+        }
+    },
+    container: {
+        display: "flex",
+        // flexDirection: "row",
+        // justifyContent: "center",
+        // alignItems: "center"
+    },
+    dataContainer: {
+        width: 1222,
+        height: 400,
+        [theme.breakpoints.down('lg')]: {
+            width: 750,
+            height: 300
+        },
+        [theme.breakpoints.down('md')]: {
+            width: 400
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: 450
+        }
+    },
+    modalContainer: {
+        [theme.breakpoints.down('lg')]: {
+            marginRight: "15rem"
+        },
+        [theme.breakpoints.down('md')]: {
+            marginRight: "30rem"
+        }
+    }
+}))
   
 const Operator = () => {
+    const classes = useStyles()
     const opCtx = useContext(OperatorContext)
 
+    const gridRef = useRef(null);
+  const [gridOptions, setGridOptions] = useState();
     const [rowData, setRowData] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
+    const columnDefs = [
+        {
+          headerName: "ID",
+          field: "id",
+          checkboxSelection:true,
+          maxWidth: 50
+        },
+        {
+          headerName: "name",
+          field: "name",
+        },
+        {
+          headerName: "country",
+          field: "country",
+        },
+        {
+          headerName: "code",
+          field: "code",
+        },
+      ];
 
+    const defaultColumnDefs = {
+        filter: "agTextColumnFilter",
+        sortable: true,
+        resizable: true,
+    
+      };
+    
+      const onGridReady = (params) => {
+        params.api.sizeColumnsToFit();
+        setGridOptions(params.api);
+        window.addEventListener('resize', function () {
+            setTimeout(function () {
+              params.api.sizeColumnsToFit();
+            });
+          });
+      
+      
+      };
 
 useEffect(() => {
     try {
@@ -28,6 +158,7 @@ useEffect(() => {
         .then(res => {
             setLoading(false)
             setRowData(res.data.payload.all_operators)
+            console.log(rowData)
         })
     } catch (error) {
         console.log(error)
@@ -56,40 +187,59 @@ return (
         
             <div class="col-2">
             <div class="vertical-nav bg-white" id="sidebar">
-                <ul class="nav flex-column bg-white mb-0">
-                <li class="nav-item"><Link to="/Operator" class="nav-link text-dark font-italic bg-light "><i class="bi bi-list-ul"></i> &nbsp; &nbsp; &nbsp; All Operators</Link></li>
+                <ul class="nav flex-column mb-0">
+                <li class="nav-item sidebar"><Link to="/Operator" class="nav-link text-dark font-italic"><i class="bi bi-list-ul"></i> &nbsp; &nbsp; All Operators</Link></li>
                 </ul>
             </div>
             </div>
 
-            <div class="col-10" >
-                <div  style={{background:"white",height:"10%",width:"98%",display:"flex",flexDirection:"row"}}>    
-                    <p style={{fontSize: "25px" , fontWeight:"bold",marginLeft:"2%" ,marginTop:"1rem"}}> Operator</p>
-                    <div style={{fontSize: "25px" ,marginTop:"1rem", fontWeight:"bold",float:"right" ,marginLeft:"75%" }}>  
+            <div class="col-10" style={{padding: "0rem"}}>
+                <div  className={classes.containerBox}>    
+                    <p className={classes.containerText}> Operator</p>
+                    <div className={classes.newContainerBtn}>  
                     <button onClick={opCtx.openModal} class="btn btn-default"> <i class="bi bi-plus-square"></i>&nbsp;Add new Operator</button></div>
                 </div>
-                <div  style={{background:"white",marginTop:"2%",marginLeft:"1%" ,height:"45%",width:"96%",display:"flex",flexDirection:"row"}}>
-                    <div style={{marginLeft:"3%" ,marginTop:"2%"}}> 
-                    <div className="ag-theme-alpine" style={{height: 300, width: 850}}>
+                <div  className={classes.gridBox}>
+                    
+                    <div className="ag-theme-alpine">
+                        <div className={classes.dataContainer}>
            <AgGridReact
+               rowHeight={40}
+               style={{ width: "100%", height: "100%;" }}
+              onGridReady={onGridReady}
+              columnDefs={columnDefs}
+              defaultColDef={defaultColumnDefs}
+              animateRows={true}
+               onRowClicked={rowClickHandler}
+               ref={gridRef}
+               
                rowData={rowData}
-               onRowClicked={rowClickHandler}>
+               rowSelection="single"
+               pagination={true}
+               paginationPageSize={10}
+               paginationNumberFormatter={function (params) {
+                 return '[' + params.value.toLocaleString() + ']';
+               }}>
                <AgGridColumn field="id" sortable={true} filter={true} checkboxSelection={true}></AgGridColumn>
                <AgGridColumn field="name" sortable={true} filter={true}></AgGridColumn>
                <AgGridColumn field="country" sortable={true} filter={true}></AgGridColumn>
                <AgGridColumn field="code" sortable={true} filter={true}></AgGridColumn>
                
            </AgGridReact>
+           </div>
        </div>
 
-                    </div>
+                    
                 </div>
             </div>
         </div>
-        {opCtx.overlay ? (<div className="overlay">
+        {opCtx.overlay ? (
+                        <div className="overlay modal-container">
                 <div className="overlay-sidebar" id="myModal2">
                     <AddOperator></AddOperator>
-                </div>
+                    </div>
+               
+                
             </div>) : ''}
     </div>
 }

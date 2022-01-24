@@ -280,8 +280,23 @@ input:checked + .slider:before {
   padding-top: 15px;
 }
 
+.modal-container {
+  color: black;
+}
+
+@media screen and (max-width: 1000px) {
+  .modal-container {
+    right: 15rem;
+    background: none;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .vertical-nav {
     display: none;
+  }
+  .modal-container {
+    right: 20rem;
+    background: none;
   }
 }

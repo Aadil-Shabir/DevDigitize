@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddClient = () => {
     const classes = useStyles();
+    const [operator, setOperator] = useState("");
     const [req, setReq] = useState({
         operator_id: '',
         provider_id: '',
@@ -118,6 +119,12 @@ const AddClient = () => {
         service_code:'',
         client_id:'26'
     });
+    const [packageData, setPackageData] = useState({
+        id: "",
+        name: "",
+        price: 0,
+        recurrencce_days: ""
+    })
 
     const [sdata, setdata] = useState({
         operator_id: '',
@@ -205,7 +212,7 @@ const AddClient = () => {
                 <div  className={classes.formContainer}>
                     <div className={classes.formHolder}> 
 
-                    <ClientForm sdata={sdata} />
+                    <ClientForm sdata={sdata} operator={operator} packageData={packageData} />
 
                                        
                     </div>
