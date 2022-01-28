@@ -19,7 +19,7 @@
 }
 .vertical-nav {
   width: 15.5rem;
-  height: 100vh;
+  height: 125vh;
   top: 0;
   left: 0;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
@@ -284,6 +284,18 @@ input:checked + .slider:before {
   color: black;
 }
 
+.minimizer {
+  width: 16.66666667%;
+}
+
+.sidebar-logo {
+  display: inline;
+}
+
+.sidebar-client-logo {
+  display: inline;
+}
+
 @media screen and (max-width: 1000px) {
   .modal-container {
     right: 15rem;
@@ -298,5 +310,23 @@ input:checked + .slider:before {
   .modal-container {
     right: 20rem;
     background: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .minimizer {
+    width: 1%;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .sidebar-logo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .sidebar-client-logo {
+    display: none;
   }
 }

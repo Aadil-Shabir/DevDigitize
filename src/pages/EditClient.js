@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
         background:"white",
         marginTop:"2%",
         marginLeft:"1%",
-        height:"40rem",
-        width:"84rem",
+        height:"50rem",
+        width:"80rem",
         display:"flex",
         flexDirection:"row",
         [theme.breakpoints.down("lg")]: {
@@ -74,7 +74,7 @@ const EditClient = () => {
     const classes = useStyles();
     const [loa, setL] = useState(true);
     const [operator_id, setOperator_id] = useState(0);
-    // const [provider_id, setProvider_id] = useState(0);
+    const [provider_id, setProvider_id] = useState(0);
     const [operator, setOperator] = useState("");
     // const [provider, setProvider] = useState("");
 
@@ -95,7 +95,9 @@ const EditClient = () => {
         client_id:'26'
     });
     const [packageData, setPackageData] = useState({
-        id: 0,
+        package_id: "",
+        operator_id: "",
+        client_id: "",
         name: "",
         price: "",
         recurrence_days: ""
@@ -125,6 +127,15 @@ const EditClient = () => {
             console.log(error)
         }
 
+        try {
+            const res = axios.post('https://dev.digitalizehub.com/api/admin/package', packageData, config)
+            alert("Sucess")
+            console.log(res)
+            
+        } catch (error) {
+            console.log(error)
+        }
+
 
 
     }
@@ -136,9 +147,9 @@ const EditClient = () => {
             axios.get(`https://dev.digitalizehub.com/api/admin/clients/${clientid.clientid}`)
             .then(res => {
                 setdata(res.data.payload.client.fields)
-                // setPackageData(res.data.payload.packages)
                 setOperator_id(res.data.payload.client.fields.operator)
-                // console.log(res.data.payload.client.fields)
+                setProvider_id(res.data.payload.client.fields.provider)
+                console.log(res.data.payload.client.fields.provider)
                 setL(false)
             })
         } catch (error) {
@@ -151,24 +162,23 @@ const EditClient = () => {
         .then(res => {
             const operatorName = res.data.payload.all_operators.find((ao) => ao.id === operator_id)
             setOperator(operatorName.name);
-            // console.log(packageData)
+            console.log(provider_id)
         })
-    }, [operator_id])
+    }, [operator_id, provider_id])
 
     useEffect(() => {
         axios.get(`https://dev.digitalizehub.com/api/admin/clients/${clientid.clientid}`)
         .then((res) => {
-            setPackageData(res.data.payload.packages[0] ? res.data.payload.packages[0] : res.data.payload.packages)
-            console.log(res.data.payload)
+            setPackageData(res.data.payload.packages[0] ? {package_id: res.data.payload.packages[0].id, name: res.data.payload.packages[0].name, price: res.data.payload.packages[0].price, recurrence_days: res.data.payload.packages[0].recurrence_days, operator_id: operator_id, client_id: res.data.payload.client.pk} : res.data.payload.packages)
+            // setPackageData({...packageData, operator_id: operator_id, client_id: res.data.payload.client.pk})
+            
         })
-    }, [])
-
-
-    console.log(loa);
+    }, [provider_id])
     
-    return (
 
-    <div> 
+    return (
+        <div>
+    
 
 {
                 loa ? <div className="text-center">
@@ -220,7 +230,7 @@ const EditClient = () => {
                 </div>
             </div>
         </div>
-}
+}       
     </div>
   );
 };

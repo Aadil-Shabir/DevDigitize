@@ -22,12 +22,14 @@ import {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+        padding: "0 2rem",
         [theme.breakpoints.down('sm')]: {
             width: "60vw",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "8rem"
+            height: "8rem",
+            marginLeft: "5rem"
         }
     },
     containerText: {
@@ -50,7 +52,7 @@ import {
         marginLeft: "2%",
         [theme.breakpoints.down('sm')]: {
             width: "12rem",
-            marginLeft: "2rem",
+            marginLeft: "1rem",
             padding: "0",
             margin: "0",
             alignItems: "center"
@@ -59,9 +61,8 @@ import {
     gridBox: {
         background:"white",
         marginTop:"2%",
-        marginLeft:"3%", 
         height:"25rem",
-        width:"79.5vw",
+        width:"82vw",
         display:"flex",
         flexDirection:"row",
         justifyContent: "center",
@@ -69,6 +70,10 @@ import {
         [theme.breakpoints.down('sm')]: {
             background: "none",
             height: "32rem",
+            justifyContent: "flex-start",
+            marginLeft: "0",
+            marginTop: "0",
+            padding: "0"
             // width: "100%"
         }
     },
@@ -79,8 +84,12 @@ import {
         // alignItems: "center"
     },
     dataContainer: {
-        width: 1222,
-        height: 400,
+        width: 1261,
+        height: 360,
+        marginTop: "2.5rem",
+        [theme.breakpoints.down('xl')]: {
+            width: 1100
+        },
         [theme.breakpoints.down('lg')]: {
             width: 750,
             height: 300
@@ -185,10 +194,10 @@ return (
     <div className="clientbg">
         <div className="row">
         
-            <div class="col-2">
+            <div class="col-2 minimizer" style={{display: "flex"}}>
             <div class="vertical-nav bg-white" id="sidebar">
                 <ul class="nav flex-column mb-0">
-                <li class="nav-item sidebar"><Link to="/Operator" class="nav-link text-dark font-italic"><i class="bi bi-list-ul"></i> &nbsp; &nbsp; All Operators</Link></li>
+                <li class="nav-item sidebar"><Link to="/Operator" class="nav-link font-italic"  style={{color: 'white'}}><i class="bi bi-list-ul sidebar-logo"></i> &nbsp; &nbsp; All Operators</Link></li>
                 </ul>
             </div>
             </div>
@@ -221,7 +230,7 @@ return (
                  return '[' + params.value.toLocaleString() + ']';
                }}>
                <AgGridColumn field="id" sortable={true} filter={true} checkboxSelection={true}></AgGridColumn>
-               <AgGridColumn field="name" sortable={true} filter={true}></AgGridColumn>
+               <AgGridColumn field="name" sortable={true} filter={true} ></AgGridColumn>
                <AgGridColumn field="country" sortable={true} filter={true}></AgGridColumn>
                <AgGridColumn field="code" sortable={true} filter={true}></AgGridColumn>
                
