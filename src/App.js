@@ -28,7 +28,7 @@ function App() {
   const theme = createTheme({
     breakpoints: {
       values: {
-        xs: 0,
+        xs: 405,
         sm: 600,
         md: 900,
         lg: 1300,
@@ -52,7 +52,7 @@ function App() {
             
             <Route exact path="/EditClient/:clientid" component={EditClient} />
             <Route exact path="/operator/AddOperator" component={AddOperator} />
-            <Route exact path="/campaign/EditCampaign" component={EditCampaign} />
+            <Route exact path="/campaign/EditCampaign/:campaignid" component={EditCampaign} />
    
     </Switch>
 
